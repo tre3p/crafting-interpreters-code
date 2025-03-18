@@ -8,7 +8,7 @@ class Scanner(
     private var currentLine = 1
 
     tailrec fun scanTokens(
-        accumulated: List<Token> = emptyList<>()
+        accumulated: List<Token> = emptyList()
     ): List<Token> {
         if (isAtEnd()) return accumulated
 
