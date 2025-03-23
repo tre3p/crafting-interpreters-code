@@ -1,4 +1,4 @@
-package com.tre3p;
+package com.tre3p.parser;
 
 import com.tre3p.scanner.model.Token;
 
