@@ -1,5 +1,7 @@
 package com.tre3p;
 
+import com.tre3p.interpreter.Interpreter;
+import com.tre3p.parser.Parser;
 import com.tre3p.scanner.TokenScanner;
 
 import java.io.BufferedReader;
@@ -11,6 +13,7 @@ import java.nio.file.Paths;
 public class REPL {
     private static final String PROMPT = "> ";
     private static final String USAGE_PROMPT = "Usage: jlox [script]";
+    private static final Interpreter interpreter = new Interpreter();
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
@@ -24,13 +27,15 @@ public class REPL {
     }
 
     private static void run(String inputCode) {
-        new TokenScanner(inputCode).scanTokens()
-                .forEach(System.out::println);
+        var tokens = new TokenScanner(inputCode).scanTokens();
+        var expression = new Parser(tokens).parse();
+        interpreter.interpret(expression);
     }
 
     private static void runFile(String filePath) throws IOException {
         run(new String(Files.readAllBytes(Paths.get(filePath))));
         if (Lox.hadError) System.exit(65);
+        if (Lox.hadRuntimeError) System.exit(70);
     }
 
     private static void runPrompt() throws IOException {
