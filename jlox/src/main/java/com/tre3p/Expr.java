@@ -4,10 +4,10 @@ import com.tre3p.scanner.model.Token;
 
 public abstract class Expr {
   public interface Visitor<R> {
-    R visitBinaryExpr(Binary expr);
-    R visitGroupingExpr(Grouping expr);
-    R visitLiteralExpr(Literal expr);
-    R visitUnaryExpr(Unary expr);
+    public R visitBinaryExpr(Binary expr);
+    public R visitGroupingExpr(Grouping expr);
+    public R visitLiteralExpr(Literal expr);
+    public R visitUnaryExpr(Unary expr);
 }
   public static class Binary extends Expr {
     public Binary(Expr left, Token operator, Expr right) {
