@@ -7,6 +7,7 @@ import com.tre3p.scanner.model.TokenType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.tre3p.scanner.model.Keywords.KEYWORDS;
 import static com.tre3p.scanner.model.TokenType.*;
 
 public class TokenScanner {
@@ -118,7 +119,11 @@ public class TokenScanner {
     private void identifier() {
         while (isAlphaNumeric(peek())) advance();
 
-        addToken(IDENTIFIER);
+        String text = input.substring(startPos, currentPos);
+        TokenType type = KEYWORDS.get(text);
+        if (type == null) type = IDENTIFIER;
+
+        addToken(type);
     }
 
     private char peek() {

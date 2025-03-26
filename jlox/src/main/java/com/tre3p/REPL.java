@@ -28,8 +28,8 @@ public class REPL {
 
     private static void run(String inputCode) {
         var tokens = new TokenScanner(inputCode).scanTokens();
-        var expression = new Parser(tokens).parse();
-        interpreter.interpret(expression);
+        var statements = new Parser(tokens).parse();
+        interpreter.interpret(statements);
     }
 
     private static void runFile(String filePath) throws IOException {

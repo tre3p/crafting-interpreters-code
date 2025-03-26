@@ -6,25 +6,25 @@ import java.util.Map;
 import static com.tre3p.scanner.model.TokenType.*;
 
 public class Keywords {
-    public static final Map<String, TokenType> keywords;
+    public static final Map<String, TokenType> KEYWORDS;
 
     static {
-        keywords = new HashMap<>();
-        keywords.put("and",    AND);
-        keywords.put("class",  CLASS);
-        keywords.put("else",   ELSE);
-        keywords.put("false",  FALSE);
-        keywords.put("for",    FOR);
-        keywords.put("fun",    FUN);
-        keywords.put("if",     IF);
-        keywords.put("nil",    NIL);
-        keywords.put("or",     OR);
-        keywords.put("print",  PRINT);
-        keywords.put("return", RETURN);
-        keywords.put("super",  SUPER);
-        keywords.put("this",   THIS);
-        keywords.put("true",   TRUE);
-        keywords.put("var",    VAR);
-        keywords.put("while",  WHILE);
+        KEYWORDS = new HashMap<>();
+        KEYWORDS.put("and",    AND);
+        KEYWORDS.put("class",  CLASS);
+        KEYWORDS.put("else",   ELSE);
+        KEYWORDS.put("false",  FALSE);
+        KEYWORDS.put("for",    FOR);
+        KEYWORDS.put("fun",    FUN);
+        KEYWORDS.put("if",     IF);
+        KEYWORDS.put("nil",    NIL);
+        KEYWORDS.put("or",     OR);
+        KEYWORDS.put("print",  PRINT);
+        KEYWORDS.put("return", RETURN);
+        KEYWORDS.put("super",  SUPER);
+        KEYWORDS.put("this",   THIS);
+        KEYWORDS.put("true",   TRUE);
+        KEYWORDS.put("var",    VAR);
+        KEYWORDS.put("while",  WHILE);
     }
 }

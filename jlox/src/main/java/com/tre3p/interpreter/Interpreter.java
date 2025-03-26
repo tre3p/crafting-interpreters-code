@@ -2,18 +2,25 @@ package com.tre3p.interpreter;
 
 import com.tre3p.Expr;
 import com.tre3p.Lox;
+import com.tre3p.Stmt;
 import com.tre3p.error.RuntimeError;
 import com.tre3p.scanner.model.Token;
 
-public class Interpreter implements Expr.Visitor<Object> {
+import java.util.List;
 
-    public void interpret(Expr expression) {
+public class Interpreter implements Expr.Visitor<Object>,
+                                    Stmt.Visitor<Void> {
+
+    public void interpret(List<Stmt> statements) {
         try {
-            Object value = evaluate(expression);
-            System.out.println(stringify(value));
+            statements.forEach(this::execute);
         } catch (RuntimeError err) {
             Lox.runtimeError(err);
         }
+    }
+
+    private void execute(Stmt stmt) {
+        stmt.accept(this);
     }
 
     private Object evaluate(Expr expr) {
@@ -129,5 +136,19 @@ public class Interpreter implements Expr.Visitor<Object> {
         }
 
         return object.toString();
+    }
+
+    @Override
+    public Void visitExpressionStmt(Stmt.Expression stmt) {
+        evaluate(stmt.expression);
+        return null;
+    }
+
+    @Override
+    public Void visitPrintStmt(Stmt.Print stmt) {
+        Object value = evaluate(stmt.expression);
+        System.out.println(stringify(value));
+
+        return null;
     }
 }
