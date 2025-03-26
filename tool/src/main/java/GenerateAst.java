@@ -1,7 +1,5 @@
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -20,6 +18,11 @@ public class GenerateAst {
                 "Literal  : Object value",
                 "Unary    : Token operator, Expr right"
         ));
+
+        defineAst(outDir, "Stmt", List.of(
+                "Expression : Expr expression",
+                "Print : Expr expression"
+        ));
     }
 
     private static void defineAst(
@@ -34,7 +37,7 @@ public class GenerateAst {
             writer.println("");
             writer.println("import java.util.List;");
             writer.println();
-            writer.println("abstract class " + baseName + " {");
+            writer.println("public abstract class " + baseName + " {");
 
             defineVisitor(writer, baseName, types);
 
@@ -45,7 +48,7 @@ public class GenerateAst {
             }
 
             writer.println();
-            writer.println("  abstract <R> R accept(Visitor<R> visitor);");
+            writer.println("  public abstract <R> R accept(Visitor<R> visitor);");
 
             writer.println("}");
         }
@@ -54,10 +57,10 @@ public class GenerateAst {
     private static void defineVisitor(
             PrintWriter writer, String baseName, List<String> types
     )  {
-        writer.println("  interface Visitor<R> {");
+        writer.println("  public interface Visitor<R> {");
         types.forEach(type -> {
             String typeName = type.split(":")[0].trim();
-            writer.println("    R visit" + typeName + baseName + "(" +
+            writer.println("    public R visit" + typeName + baseName + "(" +
                     typeName + " " + baseName.toLowerCase() + ");");
         });
 
@@ -68,8 +71,8 @@ public class GenerateAst {
             PrintWriter writer, String baseName,
             String className, String fieldList
     ) {
-        writer.println("  static class " + className + " extends " + baseName + " {");
-        writer.println("    " + className + "(" + fieldList + ") {");
+        writer.println("  public static class " + className + " extends " + baseName + " {");
+        writer.println("    public " + className + "(" + fieldList + ") {");
 
         String[] fields = fieldList.split(", ");
         for (String field: fields) {
@@ -80,7 +83,7 @@ public class GenerateAst {
 
         writer.println();
         writer.println("    @Override");
-        writer.println("    <R> R accept(Visitor<R> visitor) {");
+        writer.println("    public <R> R accept(Visitor<R> visitor) {");
         writer.println("      return visitor.visit" +
                 className + baseName + "(this);");
         writer.println("    }");
@@ -88,7 +91,7 @@ public class GenerateAst {
         writer.println();
 
         for (String field: fields) {
-            writer.println("    final " + field + ";");
+            writer.println("    public final " + field + ";");
         }
 
         writer.println("  }");
