@@ -1,11 +1,8 @@
 .PHONY: clox
 
 clox:
-	rm -f clox && \
-	rm -fr build && \
-	mkdir build && \
-	cd build && \
-	cmake .. && \
-	cmake --build . && \
-    cp clox .. && \
-    rm -fr ../build
+	rm -rf clox build
+	mkdir build
+	cd build && cmake .. && cmake --build .
+	mv build/clox .
+	rm -rf build
