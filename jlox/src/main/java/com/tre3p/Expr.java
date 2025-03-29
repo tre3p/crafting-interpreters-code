@@ -9,6 +9,7 @@ public abstract class Expr {
     public R visitLiteralExpr(Literal expr);
     public R visitUnaryExpr(Unary expr);
     public R visitVariableExpr(Variable expr);
+    public R visitAssignExpr(Assign expr);
 }
   public static class Binary extends Expr {
     public Binary(Expr left, Token operator, Expr right) {
@@ -75,6 +76,20 @@ public abstract class Expr {
     }
 
     public final Token name;
+  }
+  public static class Assign extends Expr {
+    public Assign(Token name, Expr value) {
+      this.name = name;
+      this.value = value;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+      return visitor.visitAssignExpr(this);
+    }
+
+    public final Token name;
+    public final Expr value;
   }
 
   public abstract <R> R accept(Visitor<R> visitor);

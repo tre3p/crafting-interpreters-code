@@ -1,5 +1,6 @@
 package com.tre3p.interpreter;
 
+import com.tre3p.Environment;
 import com.tre3p.Expr;
 import com.tre3p.Lox;
 import com.tre3p.Stmt;
@@ -12,6 +13,8 @@ import static com.tre3p.scanner.model.TokenType.*;
 
 public class Interpreter implements Expr.Visitor<Object>,
                                     Stmt.Visitor<Void> {
+
+    private Environment env = new Environment();
 
     public void interpret(List<Stmt> statements) {
         try {
@@ -101,6 +104,11 @@ public class Interpreter implements Expr.Visitor<Object>,
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
+        return env.get(expr.name);
+    }
+
+    @Override
+    public Object visitAssignExpr(Expr.Assign expr) {
         return null;
     }
 
@@ -161,6 +169,12 @@ public class Interpreter implements Expr.Visitor<Object>,
 
     @Override
     public Void visitVarStmt(Stmt.Var stmt) {
+        Object value = null;
+        if(stmt.initializer != null) {
+            value = evaluate(stmt.initializer);
+        };
+
+        env.define(stmt.name.lexeme(), value);
         return null;
     }
 }
