@@ -15,6 +15,19 @@ int main(int argc, const char* argv[]) {
   int constant_index = add_constant(&chunk, 1.2);
   write_chunk(&chunk, OP_CONSTANT, 123);
   write_chunk(&chunk, constant_index, 123);
+
+  constant_index = add_constant(&chunk, 3.4);
+  write_chunk(&chunk, OP_CONSTANT, 123);
+  write_chunk(&chunk, constant_index, 123);
+
+  write_chunk(&chunk, OP_ADD, 123);
+
+  constant_index = add_constant(&chunk, 5.6);
+  write_chunk(&chunk, OP_CONSTANT, 123);
+  write_chunk(&chunk, constant_index, 123);
+
+  write_chunk(&chunk, OP_DIVIDE, 123);
+
   write_chunk(&chunk, OP_NEGATE, 123);
 
   write_chunk(&chunk, OP_RETURN, 123);
