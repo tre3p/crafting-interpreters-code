@@ -39,6 +39,8 @@ int disassemble_instruction(Chunk *chunk, int offset) {
       return constant_instruction("OP_CONSTANT", chunk, offset);
     case OP_RETURN:
       return simple_instruction("OP_RETURN", offset);
+    case OP_NEGATE:
+      return simple_instruction("OP_NEGATE", offset);
     default:
       printf("Unknown op_code: %d\n", instruction);
       return offset + 1;
